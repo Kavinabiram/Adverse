@@ -6,12 +6,16 @@ import Dashboard from '../pages/dashboard/Dashboard';
 import DriversList from '../pages/drivers/DriversList';
 import DriverDetails from '../pages/drivers/DriverDetails';
 import AddDriver from '../pages/drivers/AddDriver';
+import EditDriver from '../pages/drivers/EditDriver';
 import CompaniesList from '../pages/companies/CompaniesList';
 import AddCompany from '../pages/companies/AddCompany';
+import EditCompany from '../pages/companies/EditCompany';
 import AdsList from '../pages/ads/AdsList';
 import CreateAd from '../pages/ads/CreateAd';
+import EditAd from '../pages/ads/EditAd';
 import AreasList from '../pages/areas/AreasList';
 import CreateArea from '../pages/areas/CreateArea';
+import EditArea from '../pages/areas/EditArea';
 import Reports from '../pages/reports/Reports';
 import Profile from '../pages/auth/Profile';
 import Settings from '../pages/auth/Settings';
@@ -30,18 +34,22 @@ const AppRoutes = () => {
                 <Route path="drivers" element={<DriversList />} />
                 <Route path="drivers/new" element={<AddDriver />} />
                 <Route path="drivers/:id" element={<DriverDetails />} />
+                <Route path="drivers/edit/:id" element={<EditDriver />} />
 
                 {/* Companies */}
                 <Route path="companies" element={<CompaniesList />} />
                 <Route path="companies/new" element={<AddCompany />} />
+                <Route path="companies/edit/:id" element={<EditCompany />} />
 
                 {/* Ads */}
                 <Route path="ads" element={<AdsList />} />
                 <Route path="ads/new" element={<CreateAd />} />
+                <Route path="ads/edit/:id" element={<EditAd />} />
 
                 {/* Areas */}
                 <Route path="areas" element={<AreasList />} />
                 <Route path="areas/new" element={<CreateArea />} />
+                <Route path="areas/edit/:id" element={<EditArea />} />
 
                 {/* Reports */}
                 <Route path="reports" element={<Reports />} />

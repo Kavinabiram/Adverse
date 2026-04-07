@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { MapPin, Plus, Search, MoreVertical, ShieldOff } from 'lucide-react';
+import { MapPin, Plus, Search, Edit2, ShieldOff } from 'lucide-react';
 import api from '../../services/api';
 
 const AreasList = () => {
@@ -14,20 +14,20 @@ const AreasList = () => {
     const [loading, setLoading] = useState(false);
 
     const statusTemplate = (rowData) => (
-      <span className={`px-2 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${rowData.status === 'Active' ? 'bg-black dark:bg-white text-white dark:text-black' : 'bg-gray-100 dark:bg-zinc-800 text-gray-400 dark:text-zinc-500'}`}>
-          {rowData.status}
-      </span>
+        <span className={`px-2 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${rowData.status === 'Active' ? 'bg-black dark:bg-white text-white dark:text-black' : 'bg-gray-100 dark:bg-zinc-800 text-gray-400 dark:text-zinc-500'}`}>
+            {rowData.status}
+        </span>
     );
 
     const actionTemplate = (rowData) => (
-      <div className="flex items-center justify-end space-x-2">
-        <button className="p-2 hover:bg-gray-50 dark:hover:bg-zinc-900 rounded-lg text-gray-400 hover:text-black dark:hover:text-white transition-all">
-          <MoreVertical size={18} />
-        </button>
-        <button className="p-2 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg text-gray-400 hover:text-red-500 transition-all">
-          <ShieldOff size={18} />
-        </button>
-      </div>
+        <div className="flex items-center justify-end space-x-2">
+            <NavLink to={`/areas/edit/${rowData.id}`} className="p-2 hover:bg-gray-50 dark:hover:bg-zinc-900 rounded-lg text-gray-400 hover:text-black dark:hover:text-white transition-all">
+                <Edit2 size={18} />
+            </NavLink>
+            <button className="p-2 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg text-gray-400 hover:text-red-500 transition-all">
+                <ShieldOff size={18} />
+            </button>
+        </div>
     );
 
     return (

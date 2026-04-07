@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
-import { Search, Plus, Building2, User, Mail, Phone, ExternalLink, MoreVertical } from 'lucide-react';
+import { Search, Plus, Building2, User, Mail, Phone, Edit2, MoreVertical } from 'lucide-react';
 import api from '../../services/api';
 
 const CompaniesList = () => {
@@ -45,9 +45,9 @@ const CompaniesList = () => {
     const header = (
         <div className="flex items-center justify-between p-4 dark:bg-black transition-colors duration-300">
             <div className="relative w-80">
-                <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 z-10" />
                 <InputText 
-                    className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-zinc-900 border-none rounded-lg text-sm focus:ring-1 focus:ring-black dark:focus:ring-white outline-none dark:text-white transition-colors duration-300"
+                    className="w-full !pl-12 pr-4 py-3 bg-gray-50 dark:bg-zinc-900 border-none rounded-xl text-sm focus:ring-2 focus:ring-black dark:focus:ring-white outline-none dark:text-white transition-all placeholder:text-gray-400 shadow-sm"
                     placeholder="Search companies..." 
                     onInput={(e) => setLazyParams({ ...lazyParams, filters: { global: { value: e.target.value } } })}
                 />
@@ -82,9 +82,9 @@ const CompaniesList = () => {
 
     const actionsTemplate = (rowData) => (
         <div className="flex items-center justify-end space-x-2">
-            <button className="p-2 hover:bg-gray-50 dark:hover:bg-zinc-900 rounded-lg text-gray-400 hover:text-black dark:hover:text-white transition-all">
-                <ExternalLink size={18} />
-            </button>
+            <NavLink to={`/companies/edit/${rowData.id}`} className="p-2 hover:bg-gray-50 dark:hover:bg-zinc-900 rounded-lg text-gray-400 hover:text-black dark:hover:text-white transition-all">
+                <Edit2 size={18} />
+            </NavLink>
             <button className="p-2 hover:bg-gray-50 dark:hover:bg-zinc-900 rounded-lg text-gray-400 hover:text-black dark:hover:text-white transition-all">
                 <MoreVertical size={18} />
             </button>

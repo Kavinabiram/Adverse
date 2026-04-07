@@ -37,14 +37,14 @@ const CreateArea = () => {
                     <div>
                         <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 px-1">Area Name</label>
                         <div className="relative">
-                            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                             <input
                                 type="text"
                                 required
                                 name="area_name"
                                 value={formData.area_name}
                                 onChange={handleChange}
-                                className="input-field pl-10"
+                                className="input-field !pl-12"
                                 placeholder="e.g. Bandra West, Mumbai"
                             />
                         </div>
@@ -54,14 +54,14 @@ const CreateArea = () => {
                         <div>
                             <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 px-1">Latitude</label>
                             <div className="relative">
-                                <Globe className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                                 <input
                                     type="text"
                                     required
                                     name="latitude"
                                     value={formData.latitude}
                                     onChange={handleChange}
-                                    className="input-field pl-10"
+                                    className="input-field !pl-12"
                                     placeholder="18.9212"
                                 />
                             </div>
@@ -69,14 +69,14 @@ const CreateArea = () => {
                         <div>
                              <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 px-1">Longitude</label>
                              <div className="relative">
-                                <Globe className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                                 <input
                                     type="text"
                                     required
                                     name="longitude"
                                     value={formData.longitude}
                                     onChange={handleChange}
-                                    className="input-field pl-10"
+                                    className="input-field !pl-12"
                                     placeholder="72.8344"
                                 />
                              </div>

@@ -54,14 +54,14 @@ const AddCompany = () => {
                     <div>
                         <label className="block text-xs font-bold text-gray-500 dark:text-zinc-600 uppercase tracking-widest mb-2 px-1">Company Legal Name</label>
                         <div className="relative">
-                            <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                            <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                             <input
                                 type="text"
                                 required
                                 name="company_name"
                                 value={formData.company_name}
                                 onChange={handleChange}
-                                className="input-field pl-10"
+                                className="input-field !pl-12"
                                 placeholder="e.g. Acme Advertising Ltd."
                             />
                         </div>
@@ -71,14 +71,14 @@ const AddCompany = () => {
                         <div>
                             <label className="block text-xs font-bold text-gray-500 dark:text-zinc-600 uppercase tracking-widest mb-2 px-1">Contact Person</label>
                             <div className="relative">
-                                <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                                 <input
                                     type="text"
                                     required
                                     name="contact_person"
                                     value={formData.contact_person}
                                     onChange={handleChange}
-                                    className="input-field pl-10"
+                                    className="input-field !pl-12"
                                     placeholder="e.g. Michael Scott"
                                 />
                             </div>
@@ -87,14 +87,14 @@ const AddCompany = () => {
                         <div>
                             <label className="block text-xs font-bold text-gray-500 dark:text-zinc-600 uppercase tracking-widest mb-2 px-1">Official Email</label>
                             <div className="relative">
-                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                                 <input
                                     type="email"
                                     required
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    className="input-field pl-10"
+                                    className="input-field !pl-12"
                                     placeholder="contact@acme.com"
                                 />
                             </div>
@@ -104,14 +104,14 @@ const AddCompany = () => {
                     <div>
                         <label className="block text-xs font-bold text-gray-500 dark:text-zinc-600 uppercase tracking-widest mb-2 px-1">Phone Number</label>
                         <div className="relative">
-                            <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                             <input
                                 type="text"
                                 required
                                 name="phone"
                                 value={formData.phone}
                                 onChange={handleChange}
-                                className="input-field pl-10"
+                                className="input-field !pl-12"
                                 placeholder="+91-888888888"
                             />
                         </div>

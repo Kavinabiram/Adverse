@@ -146,7 +146,7 @@ const Dashboard = () => {
                 {statCards.map((stat, i) => (
                     <div key={i} className="card group dark:bg-black dark:border-zinc-800 transition-all duration-300 hover:border-black dark:hover:border-white">
                         <div className="flex items-center justify-between mb-4">
-                            <div className="p-2.5 bg-gray-50 dark:bg-zinc-900 group-hover:bg-black dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-black rounded-lg transition-all duration-300 dark:text-zinc-400">
+                            <div className="p-2.5 bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 group-hover:bg-black dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-black rounded-lg transition-all duration-300 text-black dark:text-white">
                                 {stat.icon}
                             </div>
                             <div className={`flex items-center text-xs font-semibold ${stat.up ? 'text-green-600 bg-green-50 dark:bg-green-900/10' : 'text-red-600 bg-red-50 dark:bg-red-900/10'} px-2 py-1 rounded-full`}>
@@ -182,8 +182,8 @@ const Dashboard = () => {
                     <div className="flex-1 space-y-6">
                         {[1, 2, 3, 4, 5].map((_, i) => (
                             <div key={i} className="flex items-start space-x-4">
-                                <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-zinc-900 flex items-center justify-center shrink-0 transition-colors duration-300">
-                                    <Activity size={18} className="text-gray-400" />
+                                <div className="w-8 h-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-black dark:text-white transition-colors duration-300">
+                                    <Activity size={18} />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <p className="text-sm font-semibold text-black dark:text-white truncate transition-colors duration-300">New Driver Registered</p>

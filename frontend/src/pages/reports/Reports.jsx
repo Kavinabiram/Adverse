@@ -76,14 +76,14 @@ const Reports = () => {
     };
 
     return (
-        <div className="space-y-10">
+        <div className="space-y-10 animate-in fade-in duration-500">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
                 <div>
-                    <h2 className="text-3xl font-black tracking-tight">Enterprise Reports</h2>
+                    <h2 className="text-3xl font-black tracking-tight dark:text-white">Enterprise Reports</h2>
                     <p className="text-gray-400 font-medium mt-1">Advanced analytics and data exports.</p>
                 </div>
                 <div className="flex items-center space-x-3">
-                    <button className="flex items-center px-4 py-2 text-sm font-bold border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                    <button className="flex items-center px-4 py-2 text-sm font-bold border border-gray-200 dark:border-zinc-800 rounded-lg hover:bg-gray-50 dark:hover:bg-zinc-900 dark:text-white transition-colors">
                         <Filter size={16} className="mr-2" />
                         Custom Filters
                     </button>
@@ -101,24 +101,24 @@ const Reports = () => {
                     { label: 'Ads Performance', value: '92.4%', icon: <TrendingUp size={18} />, delta: '+2.1%' },
                     { label: 'Location CTR', value: '18.5%', icon: <MapPin size={18} />, delta: '-0.4%' },
                 ].map((item, i) => (
-                    <div key={i} className="card">
+                    <div key={i} className="card dark:bg-black dark:border-zinc-800 transition-colors duration-300">
                         <div className="flex items-center justify-between mb-2">
-                             <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center">
+                             <div className="w-8 h-8 rounded-lg bg-gray-50 dark:bg-zinc-900 flex items-center justify-center text-black dark:text-white transition-colors duration-300">
                                  {item.icon}
                              </div>
                              <span className="text-[10px] font-black uppercase text-green-500">{item.delta}</span>
                         </div>
                         <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{item.label}</p>
-                        <p className="text-2xl font-black mt-2">{item.value}</p>
+                        <p className="text-2xl font-black mt-2 dark:text-white transition-colors duration-300">{item.value}</p>
                     </div>
                 ))}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="card">
+                <div className="card dark:bg-black dark:border-zinc-800 transition-colors duration-300">
                     <div className="flex items-center justify-between mb-8">
                         <div>
-                            <h4 className="text-lg font-bold">Campaign Performance</h4>
+                            <h4 className="text-lg font-bold dark:text-white">Campaign Performance</h4>
                             <p className="text-xs text-gray-400 mt-1">Playback count per active advertisement.</p>
                         </div>
                     </div>
@@ -133,10 +133,10 @@ const Reports = () => {
                     </div>
                 </div>
 
-                <div className="card">
+                <div className="card dark:bg-black dark:border-zinc-800 transition-colors duration-300">
                     <div className="flex items-center justify-between mb-8">
                         <div>
-                            <h4 className="text-lg font-bold">Location Analytics</h4>
+                            <h4 className="text-lg font-bold dark:text-white">Location Analytics</h4>
                             <p className="text-xs text-gray-400 mt-1">Geographical distribution of ad playbacks.</p>
                         </div>
                     </div>
@@ -149,16 +149,16 @@ const Reports = () => {
                         ].map((loc, i) => (
                             <div key={i}>
                                 <div className="flex items-center justify-between mb-2">
-                                     <span className="text-sm font-bold text-gray-900">{loc.name}</span>
-                                     <span className="text-sm font-black">{loc.value}</span>
+                                     <span className="text-sm font-bold text-gray-900 dark:text-zinc-300">{loc.name}</span>
+                                     <span className="text-sm font-black dark:text-white">{loc.value}</span>
                                 </div>
-                                <div className="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
-                                    <div className="bg-black h-full" style={{ width: `${loc.progress}%` }}></div>
+                                <div className="w-full bg-gray-100 dark:bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+                                    <div className="bg-black dark:bg-white h-full transition-all duration-500" style={{ width: `${loc.progress}%` }}></div>
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <button className="w-full mt-12 py-3 text-xs font-black uppercase tracking-widest border border-gray-100 hover:bg-gray-50 rounded-lg transition-colors">
+                    <button className="w-full mt-12 py-3 text-xs font-black uppercase tracking-widest border border-gray-100 dark:border-zinc-800 dark:text-zinc-400 hover:bg-gray-50 dark:hover:bg-zinc-900 rounded-lg transition-colors">
                         Analyze More Regions
                     </button>
                 </div>

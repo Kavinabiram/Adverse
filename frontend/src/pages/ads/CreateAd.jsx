@@ -123,13 +123,13 @@ const CreateAd = () => {
                             <div>
                                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 px-1">Target Location</label>
                                 <div className="relative">
-                                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                                     <input
                                         type="text"
                                         name="location_target"
                                         value={formData.location_target}
                                         onChange={handleChange}
-                                        className="input-field pl-10"
+                                        className="input-field !pl-12 text-sm"
                                         placeholder="Mumbai, Bangalore"
                                     />
                                 </div>
@@ -137,13 +137,13 @@ const CreateAd = () => {
                             <div>
                                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 px-1">Age Category</label>
                                 <div className="relative">
-                                    <Users className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                    <Users className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                                     <input
                                         type="text"
                                         name="age_target"
                                         value={formData.age_target}
                                         onChange={handleChange}
-                                        className="input-field pl-10"
+                                        className="input-field !pl-12 text-sm"
                                         placeholder="18-35, 25-50"
                                     />
                                 </div>
@@ -153,14 +153,14 @@ const CreateAd = () => {
                         <div>
                             <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 px-1">Playback Duration (Seconds)</label>
                             <div className="relative">
-                                <Clock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                <Clock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                                 <input
                                     type="number"
                                     name="duration"
                                     required
                                     value={formData.duration}
                                     onChange={handleChange}
-                                    className="input-field pl-10"
+                                    className="input-field !pl-12 text-sm"
                                     placeholder="e.g. 15"
                                 />
                             </div>

@@ -56,14 +56,14 @@ const AddDriver = () => {
                         <div>
                             <label className="block text-xs font-bold text-gray-500 dark:text-zinc-600 uppercase tracking-widest mb-2 px-1">Full Name</label>
                             <div className="relative">
-                                <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                                 <input
                                     type="text"
                                     required
                                     name="name"
                                     value={formData.name}
                                     onChange={handleChange}
-                                    className="input-field pl-10"
+                                    className="input-field !pl-12"
                                     placeholder="e.g. John Doe"
                                 />
                             </div>
@@ -72,14 +72,14 @@ const AddDriver = () => {
                         <div>
                             <label className="block text-xs font-bold text-gray-500 dark:text-zinc-600 uppercase tracking-widest mb-2 px-1">Email Address</label>
                             <div className="relative">
-                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                                 <input
                                     type="email"
                                     required
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    className="input-field pl-10"
+                                    className="input-field !pl-12"
                                     placeholder="john@example.com"
                                 />
                             </div>
@@ -88,14 +88,14 @@ const AddDriver = () => {
                         <div>
                             <label className="block text-xs font-bold text-gray-500 dark:text-zinc-600 uppercase tracking-widest mb-2 px-1">Phone Number</label>
                             <div className="relative">
-                                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                                 <input
                                     type="text"
                                     required
                                     name="phone"
                                     value={formData.phone}
                                     onChange={handleChange}
-                                    className="input-field pl-10"
+                                    className="input-field !pl-12"
                                     placeholder="+91-0000000000"
                                 />
                             </div>
@@ -104,14 +104,14 @@ const AddDriver = () => {
                         <div>
                             <label className="block text-xs font-bold text-gray-500 dark:text-zinc-600 uppercase tracking-widest mb-2 px-1">Vehicle License Number</label>
                             <div className="relative">
-                                <Car className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                <Car className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                                 <input
                                     type="text"
                                     required
                                     name="vehicle_number"
                                     value={formData.vehicle_number}
                                     onChange={handleChange}
-                                    className="input-field pl-10"
+                                    className="input-field !pl-12"
                                     placeholder="e.g. KA-01-HG-1234"
                                 />
                             </div>

@@ -36,7 +36,7 @@ const Header = () => {
         <header className="h-16 bg-white dark:bg-black border-b border-gray-100 dark:border-zinc-900 flex items-center justify-between px-10 sticky top-0 z-50 transition-colors duration-300">
             <div className="flex-1 max-w-xl">
                 <div className="flex items-center space-x-3 group">
-                    <Search size={18} className="text-gray-300 dark:text-zinc-600 group-focus-within:text-black dark:group-focus-within:text-white transition-colors" />
+                    <Search size={18} className="text-gray-400 dark:text-zinc-400 group-focus-within:text-black dark:group-focus-within:text-white transition-colors" />
                     <input
                         type="text"
                         placeholder="Search everything..."

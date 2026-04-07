@@ -49,27 +49,27 @@ const DriverDetails = () => {
                    </span>
 
                    <div className="w-full mt-12 space-y-6">
-                       <div className="flex items-center justify-between px-6">
-                           <div className="flex items-center space-x-3">
-                               <Mail size={16} className="text-gray-400" />
-                               <span className="text-sm font-medium text-gray-500">Email</span>
-                           </div>
-                           <span className="text-sm font-bold">{driver.email}</span>
-                       </div>
-                       <div className="flex items-center justify-between px-6">
-                           <div className="flex items-center space-x-3">
-                               <Phone size={16} className="text-gray-400" />
-                               <span className="text-sm font-medium text-gray-500">Phone</span>
-                           </div>
-                           <span className="text-sm font-bold">{driver.phone}</span>
-                       </div>
-                       <div className="flex items-center justify-between px-6">
-                           <div className="flex items-center space-x-3">
-                               <Car size={16} className="text-gray-400" />
-                               <span className="text-sm font-medium text-gray-500">Vehicle</span>
-                           </div>
-                           <span className="text-sm font-bold">{driver.vehicle_number}</span>
-                       </div>
+                        <div className="flex items-center justify-between px-6">
+                            <div className="flex items-center space-x-3">
+                                <Mail size={16} className="text-gray-400 dark:text-zinc-400" />
+                                <span className="text-sm font-medium text-gray-500">Email</span>
+                            </div>
+                            <span className="text-sm font-bold dark:text-white">{driver.email}</span>
+                        </div>
+                        <div className="flex items-center justify-between px-6">
+                            <div className="flex items-center space-x-3">
+                                <Phone size={16} className="text-gray-400 dark:text-zinc-400" />
+                                <span className="text-sm font-medium text-gray-500">Phone</span>
+                            </div>
+                            <span className="text-sm font-bold dark:text-white">{driver.phone}</span>
+                        </div>
+                        <div className="flex items-center justify-between px-6">
+                            <div className="flex items-center space-x-3">
+                                <Car size={16} className="text-gray-400 dark:text-zinc-400" />
+                                <span className="text-sm font-medium text-gray-500">Vehicle</span>
+                            </div>
+                            <span className="text-sm font-bold dark:text-white">{driver.vehicle_number}</span>
+                        </div>
                    </div>
                 </div>
 
@@ -80,11 +80,13 @@ const DriverDetails = () => {
                            { label: 'Duty Time', value: '184 Hours', icon: <Activity size={18} /> },
                            { label: 'Ad Impressions', value: '25.6K', icon: <BarChart3 size={18} /> },
                         ].map((stat, i) => (
-                           <div key={i} className="card">
-                              <div className="p-2 bg-gray-50 rounded-lg w-fit mb-4">{stat.icon}</div>
-                              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{stat.label}</p>
-                              <p className="text-xl font-black mt-1">{stat.value}</p>
-                           </div>
+                            <div key={i} className="card dark:bg-black dark:border-zinc-800 transition-all duration-300">
+                               <div className="p-2.5 bg-gray-50 dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 rounded-lg w-fit mb-4 text-black dark:text-white">
+                                  {stat.icon}
+                               </div>
+                               <p className="text-xs font-bold text-gray-400 uppercase tracking-widest leading-none">{stat.label}</p>
+                               <p className="text-2xl font-black mt-2 dark:text-white transition-colors duration-300">{stat.value}</p>
+                            </div>
                         ))}
                     </div>
 
@@ -96,21 +98,21 @@ const DriverDetails = () => {
                                { campaign: 'Summer Vibes', plays: '2,140', duration: '30s', cpm: '$3.10' },
                                { campaign: 'Green Energy', plays: '840', duration: '20s', cpm: '$2.80' },
                            ].map((item, i) => (
-                            <div key={i} className="p-4 border border-gray-100 rounded-xl flex items-center justify-between hover:border-black transition-all group">
-                               <div className="flex items-center space-x-4">
-                                  <div className="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center shrink-0 group-hover:bg-black group-hover:text-white transition-all">
-                                    <Activity size={18} />
-                                  </div>
-                                  <div>
-                                    <p className="text-sm font-bold text-gray-900">{item.campaign}</p>
-                                    <p className="text-[10px] text-gray-400 font-bold uppercase mt-1 tracking-wider">{item.duration} Playback</p>
-                                  </div>
-                               </div>
-                               <div className="text-right">
-                                  <p className="text-sm font-black text-gray-900">{item.plays}</p>
-                                  <p className="text-[10px] text-green-500 font-bold uppercase mt-1">PLAYS</p>
-                               </div>
-                            </div>
+                             <div key={i} className="p-4 border border-gray-100 dark:border-zinc-800 rounded-xl flex items-center justify-between hover:border-black dark:hover:border-white transition-all group">
+                                <div className="flex items-center space-x-4">
+                                   <div className="w-10 h-10 rounded-lg bg-gray-50 dark:bg-zinc-900 border border-gray-50 dark:border-zinc-800 text-black dark:text-white flex items-center justify-center shrink-0 group-hover:bg-black dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-black transition-all">
+                                     <Activity size={18} />
+                                   </div>
+                                   <div>
+                                     <p className="text-sm font-bold text-gray-900 dark:text-white transition-colors duration-300">{item.campaign}</p>
+                                     <p className="text-[10px] text-gray-400 font-bold uppercase mt-1 tracking-wider">{item.duration} Playback</p>
+                                   </div>
+                                </div>
+                                <div className="text-right">
+                                   <p className="text-sm font-black text-gray-900 dark:text-white transition-colors duration-300">{item.plays}</p>
+                                   <p className="text-[10px] text-green-500 font-bold uppercase mt-1">PLAYS</p>
+                                </div>
+                             </div>
                            ))}
                        </div>
                     </div>
