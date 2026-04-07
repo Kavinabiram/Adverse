@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role VARCHAR(50) DEFAULT 'Admin', -- 'Super Admin', 'Admin'
+    role VARCHAR(50) DEFAULT 'Admin', -- 'Admin', 'Staff'
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -68,6 +68,5 @@ CREATE TABLE IF NOT EXISTS invoices (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Seed Initial Super Admin
--- Password is 'admin123' (bcrypt hash would be needed, but I'll use a placeholder or handle it in a seed script)
--- For the sake of this demo, we'll assume the user will run a node seed script or I'll provide hashed password.
+-- Seed Initial Admin
+-- Password is 'admin123'

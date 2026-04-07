@@ -11,8 +11,8 @@ const seed = async () => {
         const hashedPassword = await bcrypt.hash('admin123', salt);
         
         await db.query(
-            'INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) ON CONFLICT (email) DO NOTHING',
-            ['Super Admin', 'admin@adverse.com', hashedPassword, 'Super Admin']
+            'INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role',
+            ['Admin', 'admin@adverse.com', hashedPassword, 'Admin']
         );
 
         // Create Dummy Drivers

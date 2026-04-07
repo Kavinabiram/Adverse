@@ -13,6 +13,8 @@ import CreateAd from '../pages/ads/CreateAd';
 import AreasList from '../pages/areas/AreasList';
 import CreateArea from '../pages/areas/CreateArea';
 import Reports from '../pages/reports/Reports';
+import Profile from '../pages/auth/Profile';
+import Settings from '../pages/auth/Settings';
 
 const AppRoutes = () => {
     return (
@@ -43,6 +45,10 @@ const AppRoutes = () => {
 
                 {/* Reports */}
                 <Route path="reports" element={<Reports />} />
+
+                {/* User Info */}
+                <Route path="profile" element={<Profile />} />
+                <Route path="settings" element={<Settings />} />
             </Route>
 
             {/* Catch All */}

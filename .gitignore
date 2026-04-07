@@ -1,24 +1,24 @@
 # Dependency directories
 node_modules/
-client/node_modules/
-server/node_modules/
+frontend/node_modules/
+backend/node_modules/
 
 # Environment files
 .env
 .env.local
 .env.*.local
-client/.env
-client/.env.local
-server/.env
-server/.env.local
+frontend/.env
+frontend/.env.local
+backend/.env
+backend/.env.local
 
 # Build artifacts
 dist/
 build/
-client/dist/
-client/build/
-server/dist/
-server/build/
+frontend/dist/
+frontend/build/
+backend/dist/
+backend/build/
 
 # Logs
 logs/

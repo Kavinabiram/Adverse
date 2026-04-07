@@ -11,24 +11,24 @@ A professional, minimal black-and-white themed full-stack application for managi
 
 ### 1. Database Setup
 1. Ensure PostgreSQL is running.
-2. Create a database named \`vehicle_advertising\`.
-3. Run the SQL script found at \`server/setup.sql\` to initialize tables.
-4. Update \`server/.env\` with your database credentials.
+2. Create a database named `vehicle_advertising`.
+3. Run the SQL script found at `backend/setup.sql` to initialize tables.
+4. Update `backend/.env` with your database credentials.
 
-### 2. Backend Installation
-\`\`\`bash
-cd server
+### 2. Backend Setup
+```bash
+cd backend
 npm install
 node seed.js  # Optional: Seed initial admin (admin@adverse.com / admin123)
 npm start
-\`\`\`
+```
 
-### 3. Frontend Installation
-\`\`\`bash
-cd client
+### 3. Frontend Setup
+```bash
+cd frontend
 npm install
 npm run dev
-\`\`\`
+```
 
 ## Key Features
 - **Modern Dashboard**: Real-time stats and performance charts using Chart.js.
@@ -39,6 +39,6 @@ npm run dev
 - **Minimal Theme**: Sleek black-and-white enterprise UI with PrimeReact data tables.
 
 ## Folder Structure
-- \`server/\`: Express API, PostgreSQL models, and controllers.
-- \`client/\`: React application with structured components and pages.
-- \`uploads/\`: Ad media storage (created automatically).
+- `backend/`: Express API, PostgreSQL models, and controllers.
+- `frontend/`: React application with structured components and pages.
+- `uploads/`: Ad media storage (created automatically).

@@ -6,15 +6,11 @@ import {
   Building2, 
   PlusSquare, 
   MapPin, 
-  BarChart3, 
-  LogOut,
+  BarChart3,
   Car
 } from 'lucide-react';
-import useAuthStore from '../store/authStore';
 
 const Sidebar = () => {
-    const logout = useAuthStore((state) => state.logout);
-
     return (
         <aside className="sidebar bg-white dark:bg-black border-r border-gray-100 dark:border-gray-800 transition-colors duration-300">
             <div className="p-10">
@@ -53,16 +49,6 @@ const Sidebar = () => {
                     </NavLink>
                 </div>
             </nav>
-
-            <div className="p-4 border-t border-gray-100 dark:border-zinc-800">
-                <button 
-                    onClick={logout}
-                    className="flex items-center w-full px-6 py-3 text-sm font-black text-black dark:text-zinc-400 hover:bg-red-50 dark:hover:bg-red-900/10 hover:text-red-600 rounded-xl transition-all"
-                >
-                    <LogOut size={20} className="mr-3" />
-                    <span>Secure Logout</span>
-                </button>
-            </div>
         </aside>
     );
 };

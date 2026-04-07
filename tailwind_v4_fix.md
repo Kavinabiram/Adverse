@@ -11,12 +11,12 @@ The error "you're trying to use 'tailwindcss' directly as a PostCSS plugin" happ
 
 ### 🚀 To Resume:
 1.  **Stop all existing terminal processes.**
-2.  In the `client` directory:
+2.  In the `frontend` directory:
     ```bash
     npm install
     npm run dev
     ```
-3.  In the `server` directory:
+3.  In the `backend` directory:
     ```bash
     npm install
     npm start
