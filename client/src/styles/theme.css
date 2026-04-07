@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #000000;
+  --color-secondary: #ffffff;
+}
+
+@variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  .dark {
+    color-scheme: dark;
+  }
+}
+
+:root {
+  --primary: #000000;
+  --secondary: #ffffff;
+  --accent: #f1f1f1;
+  --text: #000000;
+  --text-muted: #111111;
+  --bg: #ffffff;
+  --card: #ffffff;
+  --border: #f1f1f1;
+}
+
+.dark {
+  --primary: #fff;
+  --secondary: #000;
+  --bg: #09090b;
+  --text: #fff;
+  --text-muted: #a1a1aa;
+  --border: #27272a;
+  --card: #18181b;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom PrimeReact Theme Overrides */
+.p-datatable {
+    @apply border border-gray-200 dark:border-zinc-800 rounded-lg overflow-hidden transition-colors duration-300;
+}
+
+.p-datatable .p-datatable-header {
+    @apply bg-white dark:bg-black border-b border-gray-100 dark:border-zinc-800 p-4 font-semibold text-xl dark:text-white transition-colors duration-300;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+    @apply bg-gray-50 dark:bg-zinc-900 text-black dark:text-white uppercase text-xs font-black px-4 py-3 border-b border-gray-200 dark:border-zinc-800 transition-colors duration-300;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+    @apply hover:bg-gray-50 dark:hover:bg-zinc-900 transition-colors border-b border-gray-50 dark:border-zinc-800 bg-white dark:bg-black font-bold;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+    @apply px-4 py-4 text-sm text-black dark:text-white transition-colors duration-300;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    @apply fixed left-0 top-0 h-full w-64 bg-white dark:bg-black border-r border-gray-200 dark:border-zinc-800 z-50 transition-all duration-300;
+}
+
+.sidebar-item {
+    @apply flex items-center px-6 py-3 text-sm font-black text-black dark:text-zinc-400 hover:bg-gray-50 dark:hover:bg-zinc-900 hover:text-black dark:hover:text-white transition-all cursor-pointer rounded-md mx-2;
+}
+
+.sidebar-item.active {
+    @apply bg-black dark:bg-white text-white dark:text-black hover:bg-black dark:hover:bg-white;
+}
+
+/* Header Styling */
+.header {
+    @apply sticky top-0 bg-white dark:bg-black border-b border-gray-200 dark:border-zinc-800 h-16 flex items-center justify-between px-6 z-40 transition-colors duration-300;
+}
+
+/* Card Styling */
+.card {
+    @apply bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300;
+}
+
+.btn-primary {
+    @apply bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-zinc-200 transition-colors disabled:bg-gray-400;
+}
+
+.input-field {
+    @apply w-full bg-white dark:bg-zinc-900 border border-gray-300 dark:border-zinc-800 rounded-lg px-4 py-2 text-gray-900 dark:text-white focus:ring-1 focus:ring-black dark:focus:ring-white focus:border-black dark:focus:border-white outline-none transition-all;
+}
+
+/* Specific Minimal Theme Styles */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
