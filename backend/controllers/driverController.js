@@ -4,21 +4,43 @@ const db = require('../config/db');
 // @route GET /api/drivers
 // @access Private/Admin
 const getDrivers = async (req, res) => {
-    const { page = 1, limit = 10, search = '' } = req.query;
-    const offset = (page - 1) * limit;
+    try {
+        console.log('DEBUG: Fetching drivers with query:', req.query);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
 
-    const searchTerm = `%${search}%`;
-    const result = await db.query(
-        'SELECT * FROM drivers WHERE name ILIKE $1 OR email ILIKE $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3',
-        [searchTerm, limit, offset]
-    );
+        // Simplified query for troubleshooting
+        const query = `
+            SELECT 
+                d.id, 
+                u.name, 
+                u.email, 
+                u.phone, 
+                d.auto_number as vehicle_number, 
+                d.status,
+                d.kyc_status,
+                d.created_at
+            FROM drivers d
+            LEFT JOIN users u ON d.user_id = u.id
+            ORDER BY d.created_at DESC
+            LIMIT $1 OFFSET $2
+        `;
+        
+        const result = await db.query(query, [limit, offset]);
+        console.log(`DEBUG: Found ${result.rows.length} drivers`);
 
-    const countResult = await db.query('SELECT COUNT(*) FROM drivers WHERE name ILIKE $1 OR email ILIKE $1', [searchTerm]);
+        const countResult = await db.query('SELECT COUNT(*) FROM drivers');
+        const total = parseInt(countResult.rows[0].count);
 
-    res.json({
-        drivers: result.rows,
-        total: parseInt(countResult.rows[0].count),
-    });
+        res.json({
+            drivers: result.rows,
+            total: total,
+        });
+    } catch (error) {
+        console.error('CRITICAL: Error in getDrivers:', error);
+        res.status(500).json({ message: 'Server Error' });
+    }
 };
 
 // @desc Register a driver
@@ -54,14 +76,28 @@ const updateDriver = async (req, res) => {
 // @route GET /api/drivers/:id
 // @access Private/Admin
 const getDriverById = async (req, res) => {
-    const { id } = req.params;
-    const result = await db.query('SELECT * FROM drivers WHERE id = $1', [id]);
+    try {
+        const { id } = req.params;
+        const query = `
+            SELECT 
+                d.*, 
+                u.name, 
+                u.email, 
+                u.phone 
+            FROM drivers d
+            JOIN users u ON d.user_id = u.id
+            WHERE d.id = $1
+        `;
+        const result = await db.query(query, [id]);
 
-    if (result.rows[0]) {
-        res.json(result.rows[0]);
-    } else {
-        res.status(404);
-        throw new Error('Driver not found');
+        if (result.rows[0]) {
+            res.json(result.rows[0]);
+        } else {
+            res.status(404).json({ message: 'Driver not found' });
+        }
+    } catch (error) {
+        console.error('Error in getDriverById:', error);
+        res.status(500).json({ message: 'Server Error' });
     }
 };
 

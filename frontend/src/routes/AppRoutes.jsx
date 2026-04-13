@@ -19,12 +19,14 @@ import EditArea from '../pages/areas/EditArea';
 import Reports from '../pages/reports/Reports';
 import Profile from '../pages/auth/Profile';
 import Settings from '../pages/auth/Settings';
+import SetupAdmin from '../pages/SetupAdmin';
 
 const AppRoutes = () => {
     return (
         <Routes>
             {/* Auth Routes */}
             <Route path="/login" element={<Login />} />
+            <Route path="/setup-admin" element={<SetupAdmin />} />
 
             {/* Admin Routes */}
             <Route path="/" element={<Layout />}>

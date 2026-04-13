@@ -38,8 +38,8 @@ const AreasList = () => {
                     <p className="text-gray-400 font-medium mt-1">Manage geographical targeting zones.</p>
                 </div>
                 <NavLink to="/areas/new">
-                    <button className="btn-primary flex items-center space-x-2">
-                        <Plus size={18} />
+                    <button className="btn-primary flex items-center space-x-2 !px-3 !py-1.5 !text-xs">
+                        <Plus size={14} />
                         <span>Define New Area</span>
                     </button>
                 </NavLink>

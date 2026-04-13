@@ -11,7 +11,7 @@ const loginUser = async (req, res) => {
     const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
     const user = result.rows[0];
 
-    if (user && (await bcrypt.compare(password, user.password))) {
+    if (user && (await bcrypt.compare(password, user.password_hash))) {
         res.json({
             id: user.id,
             name: user.name,

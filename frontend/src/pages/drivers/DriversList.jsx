@@ -56,18 +56,18 @@ const DriversList = () => {
 
     const header = (
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 dark:bg-black transition-colors duration-300">
-            <div className="relative w-full md:w-80">
-                <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 z-10" />
+            <div className="relative w-full md:w-64">
+                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10" />
                 <InputText
-                    className="w-full !pl-12 pr-4 py-3 bg-gray-50 dark:bg-zinc-900 border-none rounded-xl text-sm focus:ring-2 focus:ring-black dark:focus:ring-white outline-none transition-all placeholder:text-gray-400 dark:text-white shadow-sm"
-                    placeholder="Search drivers by name or email"
+                    className="w-full !pl-10 pr-4 py-2 bg-gray-50 dark:bg-zinc-900 border-none rounded-xl text-xs focus:ring-2 focus:ring-black dark:focus:ring-white outline-none transition-all placeholder:text-gray-400 dark:text-white shadow-sm"
+                    placeholder="Search drivers..."
                     onInput={(e) => setLazyParams({ ...lazyParams, filters: { global: { value: e.target.value } } })}
                 />
             </div>
             <NavLink to="/drivers/new">
-                <button className="btn-primary flex items-center space-x-2">
-                    <Plus size={18} />
-                    <span>Register New Driver</span>
+                <button className="btn-primary flex items-center space-x-2 !px-3 !py-1.5 !text-xs">
+                    <Plus size={14} />
+                    <span>Register Driver</span>
                 </button>
             </NavLink>
         </div>
