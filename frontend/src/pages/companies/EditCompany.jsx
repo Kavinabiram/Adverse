@@ -51,13 +51,16 @@ const EditCompany = () => {
         }
     };
 
-    const handleDelete = async () => {
-        if (window.confirm('Delete this partner and all associated data?')) {
+    const toggleStatus = async () => {
+        const newStatus = formData.status?.toLowerCase() === 'active' ? 'inactive' : 'active';
+        const action = newStatus === 'active' ? 'activate' : 'deactivate';
+        
+        if (window.confirm(`Are you sure you want to ${action} this account?`)) {
             try {
-                await api.delete(`/companies/${id}`);
+                await api.put(`/companies/${id}`, { ...formData, status: newStatus });
                 navigate('/companies');
             } catch (error) {
-                console.error('Failed to delete company', error);
+                console.error(`Failed to ${action} company`, error);
             }
         }
     };
@@ -77,11 +80,16 @@ const EditCompany = () => {
                     </div>
                 </div>
                 <button 
-                    onClick={handleDelete}
-                    className="flex items-center space-x-2 px-4 py-2 text-xs font-bold text-red-500 border border-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-all"
+                    type="button"
+                    onClick={toggleStatus}
+                    className={`flex items-center space-x-2 px-4 py-2 text-xs font-bold border rounded-lg transition-all ${
+                        formData.status?.toLowerCase() === 'active' 
+                        ? 'text-red-500 border-red-500 hover:bg-red-500 hover:text-white' 
+                        : 'text-green-500 border-green-500 hover:bg-green-500 hover:text-white'
+                    }`}
                 >
                     <Trash2 size={16} />
-                    <span>Deactivate Account</span>
+                    <span>{formData.status?.toLowerCase() === 'active' ? 'Deactivate Account' : 'Activate Account'}</span>
                 </button>
             </div>
 

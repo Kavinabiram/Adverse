@@ -258,7 +258,7 @@ const AddDriver = () => {
                             <h3 className="text-lg font-black tracking-tight dark:text-white">KYC Details</h3>
                         </div>
                         <p className="text-xs md:text-sm text-gray-400 font-medium mt-1 ml-11">
-                            For now, uploading any one KYC document is enough to complete KYC. Full verification will be required in the future driver app.
+                            For now, uploading any one KYC document is enough to complete KYC.
                         </p>
                     </div>
 

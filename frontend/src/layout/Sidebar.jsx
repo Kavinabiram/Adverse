@@ -20,7 +20,10 @@ const Sidebar = () => {
 
             <nav className="flex-1 px-4 space-y-2 py-4">
                 <p className="px-6 text-[10px] font-black text-black dark:text-zinc-500 uppercase tracking-widest mb-4">Core Fleet</p>
-                <NavLink to="/" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : 'text-black hover:bg-gray-50 dark:text-gray-400 dark:hover:text-white'}`}>
+                <NavLink 
+                    to="/" 
+                    className={({ isActive }) => `sidebar-item ${(isActive || window.location.pathname === '/audit-logs') ? 'active' : 'text-black hover:bg-gray-50 dark:text-gray-400 dark:hover:text-white'}`}
+                >
                     <LayoutDashboard size={20} className="mr-3 text-black dark:text-gray-400" />
                     <span className="font-bold">Overview</span>
                 </NavLink>

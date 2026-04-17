@@ -17,6 +17,7 @@ import AreasList from '../pages/areas/AreasList';
 import CreateArea from '../pages/areas/CreateArea';
 import EditArea from '../pages/areas/EditArea';
 import Reports from '../pages/reports/Reports';
+import AuditLogs from '../pages/reports/AuditLogs';
 import Profile from '../pages/auth/Profile';
 import Settings from '../pages/auth/Settings';
 import SetupAdmin from '../pages/SetupAdmin';
@@ -53,8 +54,9 @@ const AppRoutes = () => {
                 <Route path="areas/new" element={<CreateArea />} />
                 <Route path="areas/edit/:id" element={<EditArea />} />
 
-                {/* Reports */}
+                {/* Reports & Audit */}
                 <Route path="reports" element={<Reports />} />
+                <Route path="audit-logs" element={<AuditLogs />} />
 
                 {/* User Info */}
                 <Route path="profile" element={<Profile />} />

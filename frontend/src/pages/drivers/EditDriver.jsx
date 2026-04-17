@@ -301,7 +301,7 @@ const EditDriver = () => {
                             <h3 className="text-lg font-black tracking-tight dark:text-white">KYC Details</h3>
                         </div>
                         <p className="text-xs text-gray-400 font-medium mt-1 ml-11">
-                            Admins can update existing documents or upload new ones. Any one document suffices for completion.
+                            For now, uploading any one KYC document is enough to complete KYC.
                         </p>
                     </div>
 
