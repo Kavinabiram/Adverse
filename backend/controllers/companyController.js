@@ -8,7 +8,7 @@ const getCompanies = async (req, res) => {
 
         const searchTerm = `%${search}%`;
         const result = await db.query(
-            'SELECT id, name as company_name, contact_person, email, phone, type, status, created_at FROM ad_companies WHERE name ILIKE $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3',
+            'SELECT id, name as company_name, contact_person, email, phone, website_url, type, status, created_at FROM ad_companies WHERE name ILIKE $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3',
             [searchTerm, limit, offset]
         );
 
@@ -27,11 +27,11 @@ const getCompanies = async (req, res) => {
 // @desc Register a company
 const registerCompany = async (req, res) => {
     try {
-        const { company_name, contact_person, email, phone } = req.body;
+        const { company_name, contact_person, email, phone, website_url } = req.body;
 
         const result = await db.query(
-            "INSERT INTO ad_companies (name, contact_person, email, phone, type, status) VALUES ($1, $2, $3, $4, 'Corporate', 'active') RETURNING id, name as company_name, contact_person, email, phone, type, status, created_at",
-            [company_name, contact_person, email, phone]
+            "INSERT INTO ad_companies (name, contact_person, email, phone, website_url, type, status) VALUES ($1, $2, $3, $4, $5, 'Corporate', 'active') RETURNING id, name as company_name, contact_person, email, phone, website_url, type, status, created_at",
+            [company_name, contact_person, email, phone, website_url]
         );
 
         res.status(201).json(result.rows[0]);
@@ -45,11 +45,11 @@ const registerCompany = async (req, res) => {
 const updateCompany = async (req, res) => {
     try {
         const { id } = req.params;
-        const { company_name, contact_person, email, phone, status } = req.body;
+        const { company_name, contact_person, email, phone, website_url, status } = req.body;
 
         const result = await db.query(
-            'UPDATE ad_companies SET name = $1, contact_person = $2, email = $3, phone = $4, status = $5 WHERE id = $6 RETURNING id, name as company_name, contact_person, email, phone, type, status, created_at',
-            [company_name, contact_person, email, phone, status, id]
+            'UPDATE ad_companies SET name = $1, contact_person = $2, email = $3, phone = $4, website_url = $5, status = $6 WHERE id = $7 RETURNING id, name as company_name, contact_person, email, phone, website_url, type, status, created_at',
+            [company_name, contact_person, email, phone, website_url, status, id]
         );
 
         res.json(result.rows[0]);
@@ -63,7 +63,7 @@ const updateCompany = async (req, res) => {
 const getCompanyById = async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await db.query('SELECT id, name as company_name, contact_person, email, phone, type, status, created_at FROM ad_companies WHERE id = $1', [id]);
+        const result = await db.query('SELECT id, name as company_name, contact_person, email, phone, website_url, type, status, created_at FROM ad_companies WHERE id = $1', [id]);
 
         if (result.rows[0]) {
             res.json(result.rows[0]);

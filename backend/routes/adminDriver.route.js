@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createDriverWithKYC, updateDriverWithKYC } = require('../controllers/adminDriver.controller');
+const { createDriverWithKYC, updateDriverWithKYC, resetDriverPassword } = require('../controllers/adminDriver.controller');
 const { driverKYCUpload } = require('../middleware/upload.middleware');
 const { protect, admin } = require('../middleware/authMiddleware');
 
@@ -63,5 +63,30 @@ router.post('/create', protect, admin, driverKYCUpload, createDriverWithKYC);
  *       200: { description: Successfully updated }
  */
 router.put('/:id', protect, admin, driverKYCUpload, updateDriverWithKYC);
+
+/**
+ * @swagger
+ * /admin/drivers/{id}/reset-password:
+ *   post:
+ *     summary: Reset driver password (Admin only)
+ *     tags: [Admin Management]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [password]
+ *             properties:
+ *               password: { type: string, minLength: 6 }
+ *     responses:
+ *       200: { description: Password reset successfully }
+ */
+router.post('/:id/reset-password', protect, admin, resetDriverPassword);
 
 module.exports = router;

@@ -12,6 +12,10 @@ const createDriverKYCSchema = Joi.object({
     email: Joi.string().email().required(),
     phone: Joi.string().required().pattern(/^[0-9+-\s]{10,15}$/),
     vehicle_number: Joi.string().required(),
+    password: Joi.string().min(6).required().messages({
+        'string.min': 'Password must be at least 6 characters long',
+        'any.required': 'Password is required'
+    }),
     aadhaar_number: Joi.string().length(12).pattern(/^[0-9]+$/).optional().allow('', null),
     license_number: Joi.string().optional().allow('', null)
 });
@@ -46,7 +50,12 @@ const createDriverWithKYC = async (req, res, next) => {
         const kyc_status = hasAnyDocument ? 'completed' : 'pending';
 
         // 3. Database Transaction
-        const { name, email, phone, vehicle_number, aadhaar_number, license_number } = value;
+        const { name, email, phone, vehicle_number, aadhaar_number, license_number, password } = value;
+        
+        // Prepare password hash
+        const bcrypt = require('bcryptjs');
+        const salt = await bcrypt.genSalt(10);
+        const passwordHash = await bcrypt.hash(password, salt);
         
         // Prepare file paths (only for those uploaded)
         const docPaths = {
@@ -71,10 +80,10 @@ const createDriverWithKYC = async (req, res, next) => {
              * Create User Record
              */
             const userResult = await client.query(
-                `INSERT INTO users (name, email, phone, role, status, auth_uid) 
-                 VALUES ($1, $2, $3, 'Driver', 'active', NULL) 
+                `INSERT INTO users (name, email, phone, role, status, auth_uid, password_hash) 
+                 VALUES ($1, $2, $3, 'Driver', 'active', NULL, $4) 
                  RETURNING id`,
-                [name, email, phone]
+                [name, email, phone, passwordHash]
             );
             const userId = userResult.rows[0].id;
 
@@ -210,7 +219,43 @@ const updateDriverWithKYC = async (req, res, next) => {
     }
 };
 
+/**
+ * @desc Reset driver password (Admin only)
+ * @route POST /api/admin/drivers/:id/reset-password
+ */
+const resetDriverPassword = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { password } = req.body;
+
+        if (!password || password.length < 6) {
+            return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+        }
+
+        const client = await db.pool.connect();
+        try {
+            const driverExists = await client.query('SELECT user_id FROM drivers WHERE id = $1', [id]);
+            if (driverExists.rows.length === 0) {
+                return res.status(404).json({ message: 'Driver not found' });
+            }
+
+            const bcrypt = require('bcryptjs');
+            const salt = await bcrypt.genSalt(10);
+            const passwordHash = await bcrypt.hash(password, salt);
+
+            await client.query('UPDATE users SET password_hash = $1 WHERE id = $2', [passwordHash, driverExists.rows[0].user_id]);
+            
+            res.json({ message: 'Password reset successfully' });
+        } finally {
+            client.release();
+        }
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     createDriverWithKYC,
-    updateDriverWithKYC
+    updateDriverWithKYC,
+    resetDriverPassword
 };

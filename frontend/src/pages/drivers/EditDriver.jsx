@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, NavLink } from 'react-router-dom';
 import { 
     User, Phone, Mail, Car, ArrowLeft, Save, Trash2,
-    FileText, CreditCard, Image as ImageIcon, X, CheckCircle, ChevronRight
+    FileText, CreditCard, Image as ImageIcon, X, CheckCircle, ChevronRight,
+    Lock, Eye, EyeOff, ShieldCheck
 } from 'lucide-react';
 import api from '../../services/api';
 
@@ -13,6 +14,10 @@ const EditDriver = () => {
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState(null);
     const [fieldErrors, setFieldErrors] = useState({});
+    const [resettingPassword, setResettingPassword] = useState(false);
+    const [newPassword, setNewPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [resetSuccess, setResetSuccess] = useState(false);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -146,6 +151,27 @@ const EditDriver = () => {
         } catch (error) {
             setError(error.response?.data?.message || 'Failed to update driver');
             setSaving(false);
+        }
+    };
+
+    const handleResetPassword = async (e) => {
+        e.preventDefault();
+        if (!newPassword || newPassword.length < 6) {
+            setError('Password must be at least 6 characters long');
+            return;
+        }
+
+        setResettingPassword(true);
+        setError(null);
+        try {
+            await api.post(`/admin/drivers/${id}/reset-password`, { password: newPassword });
+            setResetSuccess(true);
+            setNewPassword('');
+            setTimeout(() => setResetSuccess(false), 3000);
+        } catch (error) {
+            setError(error.response?.data?.message || 'Failed to reset password');
+        } finally {
+            setResettingPassword(false);
         }
     };
 
@@ -293,7 +319,56 @@ const EditDriver = () => {
                     </div>
                 </div>
 
-                {/* Section 2: KYC Details */}
+                {/* Section 2: Security & Access (Reset Password) */}
+                <div className="card dark:bg-black dark:border-zinc-800 p-6 md:p-8 space-y-8 border-l-4 border-l-[#aa3bff]">
+                    <div className="flex items-center justify-between border-b border-gray-100 dark:border-zinc-800 pb-4">
+                        <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-[#aa3bff] text-white flex items-center justify-center font-black italic">S</div>
+                            <h3 className="text-lg font-black tracking-tight dark:text-white">Security & Access</h3>
+                        </div>
+                        {resetSuccess && (
+                            <div className="flex items-center gap-2 text-green-500 text-xs font-bold animate-in fade-in slide-in-from-right-2">
+                                <CheckCircle size={14} />
+                                <span>PASSWORD UPDATED</span>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="max-w-md space-y-4">
+                        <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest px-1">Overwrite Account Password</label>
+                        <div className="flex flex-col md:flex-row gap-4">
+                            <div className="relative flex-1">
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                <input 
+                                    type={showPassword ? "text" : "password"} 
+                                    value={newPassword} 
+                                    onChange={(e) => setNewPassword(e.target.value)} 
+                                    className="input-field !pl-12 !pr-12 !py-2.5 dark:bg-zinc-900" 
+                                    placeholder="Enter new password" 
+                                />
+                                <button 
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={handleResetPassword}
+                                disabled={resettingPassword || !newPassword}
+                                className="px-6 py-2.5 bg-[#aa3bff] hover:bg-[#aa3bff]/80 disabled:opacity-50 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all flex items-center gap-2"
+                            >
+                                <ShieldCheck size={16} />
+                                {resettingPassword ? 'Processing...' : 'Reset'}
+                            </button>
+                        </div>
+                        <p className="text-[10px] text-gray-500 font-medium px-1">This will immediately overwrite the driver's current password. They will need to use the new password for their next login.</p>
+                    </div>
+                </div>
+
+                {/* Section 3: KYC Details */}
                 <div className="card dark:bg-black dark:border-zinc-800 p-6 md:p-8 space-y-8">
                     <div className="border-b border-gray-100 dark:border-zinc-800 pb-4">
                         <div className="flex items-center gap-3">

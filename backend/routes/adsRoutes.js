@@ -5,7 +5,7 @@ const { protect, admin } = require('../middleware/authMiddleware');
 const { upload } = require('../middleware/uploadMiddleware');
 
 router.route('/')
-    .get(protect, admin, getAds)
+    .get(protect, getAds)
     .post(protect, admin, createAd);
 
 router.post('/upload-video', protect, admin, upload.single('video'), uploadVideo);

@@ -5,6 +5,10 @@ const User = {
         const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
         return result.rows[0];
     },
+    findByEmailOrPhone: async (identifier) => {
+        const result = await db.query('SELECT * FROM users WHERE email = $1 OR phone = $1', [identifier]);
+        return result.rows[0];
+    },
     findById: async (id) => {
         const result = await db.query('SELECT id, name, email, role FROM users WHERE id = $1', [id]);
         return result.rows[0];

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
-import { ArrowLeft, Building2, User, Mail, Phone, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Building2, User, Mail, Phone, ChevronRight, Globe } from 'lucide-react';
 import api from '../../services/api';
 
 const AddCompany = () => {
@@ -9,7 +9,8 @@ const AddCompany = () => {
         company_name: '',
         contact_person: '',
         email: '',
-        phone: ''
+        phone: '',
+        website_url: ''
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -113,6 +114,21 @@ const AddCompany = () => {
                                 onChange={handleChange}
                                 className="input-field !pl-12"
                                 placeholder="+91-888888888"
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-xs font-bold text-gray-500 dark:text-zinc-600 uppercase tracking-widest mb-2 px-1">Website URL</label>
+                        <div className="relative">
+                            <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
+                            <input
+                                type="url"
+                                name="website_url"
+                                value={formData.website_url}
+                                onChange={handleChange}
+                                className="input-field !pl-12"
+                                placeholder="https://www.acme.com"
                             />
                         </div>
                     </div>

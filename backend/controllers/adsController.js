@@ -12,12 +12,27 @@ const getAds = async (req, res) => {
         const offset = (page - 1) * limit;
 
         const searchTerm = `%${search}%`;
-        const result = await db.query(
-            'SELECT a.*, c.name as company_name FROM ads a LEFT JOIN ad_companies c ON a.ad_company_id = c.id WHERE a.title ILIKE $1 ORDER BY a.created_at DESC LIMIT $2 OFFSET $3',
-            [searchTerm, limit, offset]
-        );
+        
+        let query = 'SELECT a.*, c.name as company_name FROM ads a LEFT JOIN ad_companies c ON a.ad_company_id = c.id WHERE a.title ILIKE $1';
+        let params = [searchTerm];
+        
+        if (req.user.role !== 'Admin' && req.user.role !== 'Super Admin') {
+            query += ' AND a.status = \'active\'';
+        }
+        
+        query += ' ORDER BY a.created_at DESC LIMIT $2 OFFSET $3';
+        params.push(limit, offset);
 
-        const countResult = await db.query('SELECT COUNT(*) FROM ads WHERE title ILIKE $1', [searchTerm]);
+        const result = await db.query(query, params);
+
+        let countQuery = 'SELECT COUNT(*) FROM ads WHERE title ILIKE $1';
+        let countParams = [searchTerm];
+        
+        if (req.user.role !== 'Admin' && req.user.role !== 'Super Admin') {
+            countQuery += ' AND status = \'active\'';
+        }
+        
+        const countResult = await db.query(countQuery, countParams);
 
         res.json({
             ads: result.rows,

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { 
     ArrowLeft, User, Phone, Mail, Car, ChevronRight, 
-    FileText, CreditCard, Image as ImageIcon, Upload, X, CheckCircle 
+    FileText, CreditCard, Image as ImageIcon, Upload, X, CheckCircle, 
+    Lock, Eye, EyeOff 
 } from 'lucide-react';
 import api from '../../services/api';
 
@@ -13,6 +14,8 @@ const AddDriver = () => {
         phone: '',
         email: '',
         vehicle_number: '',
+        password: '',
+        confirmPassword: '',
         aadhaar_number: '',
         license_number: ''
     });
@@ -34,6 +37,8 @@ const AddDriver = () => {
     const [fieldErrors, setFieldErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleTextChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -101,11 +106,18 @@ const AddDriver = () => {
         const requiredDocs = ['license_image', 'aadhaar_image', 'vehicle_rc_image'];
         const hasWorkableDoc = requiredDocs.some(f => files[f]);
         
-        if (!hasWorkableDoc) {
-            const msg = "Please upload at least one KYC document (License, Aadhaar, or Vehicle RC).";
+        // 3. Password Validation
+        if (formData.password !== formData.confirmPassword) {
+            const msg = "Passwords do not match.";
             setError(msg);
-            setFieldErrors(prev => ({ ...prev, kyc_docs: msg }));
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setFieldErrors(prev => ({ ...prev, password: msg, confirmPassword: msg }));
+            return;
+        }
+
+        if (formData.password.length < 6) {
+            const msg = "Password must be at least 6 characters long.";
+            setError(msg);
+            setFieldErrors(prev => ({ ...prev, password: msg }));
             return;
         }
 
@@ -246,6 +258,54 @@ const AddDriver = () => {
                                 <Car className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                                 <input type="text" required name="vehicle_number" value={formData.vehicle_number} onChange={handleTextChange} className="input-field !pl-12 !py-3 !text-sm" placeholder="KA-01-HG-1234" />
                             </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="block text-[10px] font-black text-gray-500 dark:text-zinc-600 uppercase tracking-widest px-1">Password</label>
+                            <div className="relative">
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                <input 
+                                    type={showPassword ? "text" : "password"} 
+                                    required 
+                                    name="password" 
+                                    value={formData.password} 
+                                    onChange={handleTextChange} 
+                                    className={`input-field !pl-12 !pr-12 !py-3 !text-sm ${fieldErrors.password ? 'border-red-500' : ''}`} 
+                                    placeholder="••••••••" 
+                                />
+                                <button 
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                            </div>
+                            {fieldErrors.password && <p className="text-[10px] text-red-500 font-bold px-1">{fieldErrors.password}</p>}
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="block text-[10px] font-black text-gray-500 dark:text-zinc-600 uppercase tracking-widest px-1">Confirm Password</label>
+                            <div className="relative">
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                <input 
+                                    type={showConfirmPassword ? "text" : "password"} 
+                                    required 
+                                    name="confirmPassword" 
+                                    value={formData.confirmPassword} 
+                                    onChange={handleTextChange} 
+                                    className={`input-field !pl-12 !pr-12 !py-3 !text-sm ${fieldErrors.confirmPassword ? 'border-red-500' : ''}`} 
+                                    placeholder="••••••••" 
+                                />
+                                <button 
+                                    type="button"
+                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                                >
+                                    {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                            </div>
+                            {fieldErrors.confirmPassword && <p className="text-[10px] text-red-500 font-bold px-1">{fieldErrors.confirmPassword}</p>}
                         </div>
                     </div>
                 </div>

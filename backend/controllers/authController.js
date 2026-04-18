@@ -8,7 +8,8 @@ const generateToken = require('../utils/generateToken');
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
-    const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+    // Find user by email or phone
+    const result = await db.query('SELECT * FROM users WHERE email = $1 OR phone = $1', [email]);
     const user = result.rows[0];
 
     if (user && (await bcrypt.compare(password, user.password_hash))) {
@@ -40,4 +41,25 @@ const getUserProfile = async (req, res) => {
     }
 };
 
-module.exports = { loginUser, getUserProfile };
+// @desc Change password
+// @route POST /api/auth/change-password
+// @access Private
+const changePassword = async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+
+    const result = await db.query('SELECT * FROM users WHERE id = $1', [req.user.id]);
+    const user = result.rows[0];
+
+    if (user && (await bcrypt.compare(oldPassword, user.password_hash))) {
+        const salt = await bcrypt.genSalt(10);
+        const passwordHash = await bcrypt.hash(newPassword, salt);
+
+        await db.query('UPDATE users SET password_hash = $1 WHERE id = $2', [passwordHash, user.id]);
+        res.json({ message: 'Password updated successfully' });
+    } else {
+        res.status(401);
+        throw new Error('Invalid old password');
+    }
+};
+
+module.exports = { loginUser, getUserProfile, changePassword };

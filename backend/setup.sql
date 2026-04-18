@@ -26,6 +26,7 @@ CREATE TABLE users (
     name VARCHAR,
     phone VARCHAR UNIQUE,
     email VARCHAR UNIQUE,
+    password_hash VARCHAR,
     status VARCHAR DEFAULT 'active',
     created_at TIMESTAMP DEFAULT NOW()
 );
@@ -86,6 +87,7 @@ CREATE TABLE ad_companies (
     contact_person VARCHAR,
     phone VARCHAR,
     email VARCHAR UNIQUE,
+    website_url VARCHAR,
     address TEXT,
     created_at TIMESTAMP DEFAULT NOW()
 );
