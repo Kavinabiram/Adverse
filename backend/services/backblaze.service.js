@@ -15,6 +15,25 @@ const initializeB2 = async () => {
     await b2InitPromise;
 };
 
+const getB2Token = async () => {
+    try {
+        // Re-authorize to ensure we have a fresh downloadUrl and token
+        await b2.authorize();
+        const bucketId = process.env.B2_BUCKET_ID;
+        
+        const response = await b2.getDownloadAuthorization({
+            bucketId: bucketId,
+            fileNamePrefix: '', // Authorize everything in the bucket
+            validDurationInSeconds: 86400 // 24 hours (safer than 7 days)
+        });
+
+        return response.data.authorizationToken;
+    } catch (error) {
+        console.error('Error getting B2 token:', error);
+        throw error;
+    }
+};
+
 const uploadToB2 = async (filePath, folder, fileName) => {
     try {
         await initializeB2();
@@ -40,34 +59,23 @@ const uploadToB2 = async (filePath, folder, fileName) => {
             mime: 'b2/x-auto' // Tells B2 to guess based on extension
         });
 
-        // Generate a signed authorization token because FREE Backblaze accounts 
-        // lock buckets to Private natively and return 401 Unauthorized
-        const authReq = await b2.getDownloadAuthorization({
-            bucketId: bucketId,
-            fileNamePrefix: '',
-            validDurationInSeconds: 604800 // 7 days Max limit
-        });
-        const urlAuthToken = authReq.data.authorizationToken;
-
         // The authorization object gives the base downloadUrl
         const authData = (await b2InitPromise).data;
         const downloadUrl = authData.downloadUrl;
         
-        // We know that getting bucket Name is critical for public URLs
         const bucketResponse = await b2.getBucket({ bucketId: bucketId });
         const bucketName = bucketResponse.data.buckets[0].bucketName;
         
-        // Correcting URL structure parsing for special characters or spaces
         const encodedBucket = encodeURIComponent(bucketName);
         const encodedPath = b2FilePath.split('/').map(encodeURIComponent).join('/');
         
-        // Append the token to forcefully bypass the private rendering lock
-        const publicUrl = `${downloadUrl}/file/${encodedBucket}/${encodedPath}?Authorization=${urlAuthToken}`;
+        // Return URL without token for DB storage, we'll append token dynamically
+        const baseUrl = `${downloadUrl}/file/${encodedBucket}/${encodedPath}`;
         
         return {
             fileId: uploadResponse.data.fileId,
             fileName: uploadResponse.data.fileName,
-            url: publicUrl
+            url: baseUrl
         };
     } catch (error) {
         console.error('B2 Upload Error:', error);
@@ -76,5 +84,6 @@ const uploadToB2 = async (filePath, folder, fileName) => {
 };
 
 module.exports = {
-    uploadToB2
+    uploadToB2,
+    getB2Token
 };

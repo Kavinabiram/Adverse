@@ -12,7 +12,7 @@ const EditCompany = () => {
         contact_person: '',
         email: '',
         phone: '',
-        website: '',
+        website_url: '',
         status: 'ACTIVE'
     });
 
@@ -25,7 +25,7 @@ const EditCompany = () => {
                     contact_person: data.contact_person,
                     email: data.email,
                     phone: data.phone,
-                    website: data.website || '',
+                    website_url: data.website_url || '',
                     status: data.status || 'ACTIVE'
                 });
                 setLoading(false);
@@ -133,9 +133,9 @@ const EditCompany = () => {
                             <div className="relative">
                                 <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                                 <input
-                                    type="url"
-                                    name="website"
-                                    value={formData.website}
+                                    type="text"
+                                    name="website_url"
+                                    value={formData.website_url}
                                     onChange={handleChange}
                                     className="input-field !pl-12 dark:bg-zinc-900 border-gray-100 dark:border-zinc-800"
                                     placeholder="https://acme.com"

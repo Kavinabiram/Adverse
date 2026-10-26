@@ -2,7 +2,7 @@ const db = require('../config/db');
 const Joi = require('joi');
 const fs = require('fs');
 const path = require('path');
-const { uploadToB2 } = require('../services/backblaze.service');
+const { uploadToB2, getB2Token } = require('../services/backblaze.service');
 const { generateThumbnail } = require('../services/video.service');
 
 // @desc Get all ads
@@ -34,8 +34,19 @@ const getAds = async (req, res) => {
         
         const countResult = await db.query(countQuery, countParams);
 
+        const token = await getB2Token();
+        const adsWithSignedUrls = result.rows.map(ad => {
+            const signedAd = {
+                ...ad,
+                file_url: ad.file_url ? `${ad.file_url.split('?')[0]}?Authorization=${token}` : null,
+                thumbnail_url: ad.thumbnail_url ? `${ad.thumbnail_url.split('?')[0]}?Authorization=${token}` : null
+            };
+            console.log(`[ADS] Signed URL for ${ad.title}: ${signedAd.thumbnail_url}`);
+            return signedAd;
+        });
+
         res.json({
-            ads: result.rows,
+            ads: adsWithSignedUrls,
             total: parseInt(countResult.rows[0].count),
         });
     } catch (err) {
@@ -95,7 +106,10 @@ const createAd = async (req, res) => {
             [
                 value.ad_company_id, value.title, value.description, value.contact_name, value.contact_phone,
                 value.contact_email, value.website_url, value.location_name, value.location_lat, value.location_lng,
-                value.google_maps_url, value.type, value.file_url, value.thumbnail_url, value.duration_seconds,
+                value.google_maps_url, value.type, 
+                value.file_url.split('?')[0], 
+                value.thumbnail_url ? value.thumbnail_url.split('?')[0] : null, 
+                value.duration_seconds,
                 value.video_size, value.video_format, value.status
             ]
         );
@@ -136,10 +150,12 @@ const uploadVideo = async (req, res) => {
         fs.unlinkSync(videoPath);
         fs.unlinkSync(thumbnailPath);
 
+        const token = await getB2Token();
+
         res.json({
-            file_url: videoUpload.url,
-            thumbnail_url: thumbnailUpload.url,
-            duration_seconds: 0, // Placeholder, can be extracted using FFmpeg, though not required here
+            file_url: `${videoUpload.url}?Authorization=${token}`,
+            thumbnail_url: `${thumbnailUpload.url}?Authorization=${token}`,
+            duration_seconds: 0,
             video_size: videoSize,
             video_format: videoFormat
         });
@@ -177,11 +193,15 @@ const updateThumbnail = async (req, res) => {
             [thumbnailUpload.url, id]
         );
 
-        if (result.rowCount === 0) {
-            return res.status(404).json({ message: 'Ad not found' });
-        }
+        const token = await getB2Token();
+        const ad = result.rows[0];
+        const signedAd = {
+            ...ad,
+            file_url: ad.file_url ? `${ad.file_url.split('?')[0]}?Authorization=${token}` : null,
+            thumbnail_url: ad.thumbnail_url ? `${ad.thumbnail_url.split('?')[0]}?Authorization=${token}` : null
+        };
 
-        res.json({ message: 'Thumbnail updated successfully', ad: result.rows[0] });
+        res.json({ message: 'Thumbnail updated successfully', ad: signedAd });
 
     } catch (error) {
         console.error(error);
@@ -211,7 +231,8 @@ const uploadCustomThumbnail = async (req, res) => {
 
         fs.unlinkSync(thumbnailPath);
 
-        res.json({ thumbnail_url: thumbnailUpload.url });
+        const token = await getB2Token();
+        res.json({ thumbnail_url: `${thumbnailUpload.url}?Authorization=${token}` });
     } catch (error) {
         console.error(error);
         if (req.file && fs.existsSync(req.file.path)) {
@@ -261,7 +282,15 @@ const updateAd = async (req, res) => {
             return res.status(404).json({ message: 'Ad not found' });
         }
 
-        res.json(result.rows[0]);
+        const token = await getB2Token();
+        const ad = result.rows[0];
+        const signedAd = {
+            ...ad,
+            file_url: ad.file_url ? `${ad.file_url.split('?')[0]}?Authorization=${token}` : null,
+            thumbnail_url: ad.thumbnail_url ? `${ad.thumbnail_url.split('?')[0]}?Authorization=${token}` : null
+        };
+
+        res.json(signedAd);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error updating ad', error: err.message });
@@ -293,7 +322,15 @@ const getAdById = async (req, res) => {
             return res.status(404).json({ message: 'Ad not found' });
         }
 
-        res.json(result.rows[0]);
+        const token = await getB2Token();
+        const ad = result.rows[0];
+        const signedAd = {
+            ...ad,
+            file_url: ad.file_url ? `${ad.file_url.split('?')[0]}?Authorization=${token}` : null,
+            thumbnail_url: ad.thumbnail_url ? `${ad.thumbnail_url.split('?')[0]}?Authorization=${token}` : null
+        };
+
+        res.json(signedAd);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server error' });
